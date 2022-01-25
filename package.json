@@ -1,0 +1,20 @@
+{
+  "name": "socketio-signal-server",
+  "preferGlobal": false,
+  "version": "1.3.2",
+  "description": "Socket.io Signal Server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngstwr/socketio-signal-server.git"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "./node_scripts/index.js",
+  "dependencies": {
+    "socket.io": "latest"
+  },
+  "analyze": false,
+  "license": "GNU",
+  "readmeFilename": "README.md"
+}
