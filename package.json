@@ -3,6 +3,7 @@
   "preferGlobal": false,
   "version": "1.3.2",
   "description": "Socket.io Signal Server",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/ngstwr/socketio-signal-server.git"
@@ -15,6 +16,6 @@
     "socket.io": "latest"
   },
   "analyze": false,
-  "license": "GNU",
+  "license": "UNLICENSED",
   "readmeFilename": "README.md"
 }
