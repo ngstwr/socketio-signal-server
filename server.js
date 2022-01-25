@@ -101,12 +101,7 @@ httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", 
 // --------------------------
 // socket.io codes goes below
 
-ioServer(httpApp, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
-    }
-}).on('connection', function(socket) {
+ioServer(httpApp).on('connection', function(socket) {
     RTCMultiConnectionServer.addSocket(socket, config);
 
     // ----------------------
