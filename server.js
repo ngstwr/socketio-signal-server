@@ -103,7 +103,9 @@ httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", 
 
 ioServer(httpApp, {
     cors: {
-        origin: "*"
+        origin: "*",
+        withCredentials: false,
+        methods: ["GET", "POST"]
     }
 }).on('connection', function(socket) {
     RTCMultiConnectionServer.addSocket(socket, config);
