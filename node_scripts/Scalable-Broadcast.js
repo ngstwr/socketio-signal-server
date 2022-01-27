@@ -69,7 +69,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
                 // logs for target relaying user
                 relayUser.socket.emit('logs', 'You <' + relayUser.userid + '>' + ' are now relaying/forwarding data/stream to <' + user.userid + '>');
             } else {
-                console.log('ESB - join-broadcast initiator user ', user);
+                console.log('ESB - join-broadcast start-broadcasting ', user);
                 users[user.userid].isBroadcastInitiator = true;
                 socket.emit('start-broadcasting', users[user.userid].typeOfStreams);
 
