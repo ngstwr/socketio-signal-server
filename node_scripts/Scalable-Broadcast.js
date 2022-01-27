@@ -15,10 +15,10 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
     }
 
     socket.on('join-broadcast', function(user) {
-        console.log('ESB - join-broadcast user ', user);
+        // console.log('ESB - join-broadcast user ', user);
         try {
             if (!users[user.userid]) {
-                console.log('ESB - join-broadcast not a first user ', user);
+                // console.log('ESB - join-broadcast not a first user ', user);
                 socket.userid = user.userid;
                 socket.isScalableBroadcastSocket = true;
 
@@ -43,13 +43,13 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
             var relayUser = getFirstAvailableBroadcaster(user.broadcastId, maxRelayLimitPerUser);
 
             if (relayUser === 'ask-him-rejoin') {
-                console.log('ESB - join-broadcast ask-him-rejoin ');
+                // console.log('ESB - join-broadcast ask-him-rejoin ');
                 socket.emit('rejoin-broadcast', user.broadcastId);
                 return;
             }
 
             if (relayUser && user.userid !== user.broadcastId) {
-                console.log('ESB - join-broadcast not a initiator user ', user);
+                // console.log('ESB - join-broadcast not a initiator user ', user);
                 var hintsToJoinBroadcast = {
                     typeOfStreams: relayUser.typeOfStreams,
                     userid: relayUser.userid,
@@ -70,7 +70,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
                 // logs for target relaying user
                 relayUser.socket.emit('logs', 'You <' + relayUser.userid + '>' + ' are now relaying/forwarding data/stream to <' + user.userid + '>');
             } else {
-                console.log('ESB - join-broadcast start-broadcasting ', user);
+                // console.log('ESB - join-broadcast start-broadcasting ', user);
                 users[user.userid].isBroadcastInitiator = true;
                 socket.emit('start-broadcasting', users[user.userid].typeOfStreams);
 
@@ -83,19 +83,19 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
     });
 
     socket.on('scalable-broadcast-message', function(message) {
-        console.log('ESB - scalable-broadcast-message ', message);
+        // console.log('ESB - scalable-broadcast-message ', message);
         socket.broadcast.emit('scalable-broadcast-message', message);
     });
 
     socket.on('can-relay-broadcast', function() {
-        console.log('ESB - can-relay-broadcast')
+        // console.log('ESB - can-relay-broadcast')
         if (users[socket.userid]) {
             users[socket.userid].canRelay = true;
         }
     });
 
     socket.on('can-not-relay-broadcast', function() {
-        console.log('ESB - can-not-relay-broadcast')
+        // console.log('ESB - can-not-relay-broadcast')
         if (users[socket.userid]) {
             users[socket.userid].canRelay = false;
         }
@@ -103,7 +103,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
 
     socket.on('check-broadcast-presence', function(userid, callback) {
         // we can pass number of viewers as well
-        console.log('ESB - check-broadcast-presence ', userid);
+        // console.log('ESB - check-broadcast-presence ', userid);
         try {
             callback(!!users[userid] && users[userid].isBroadcastInitiator === true);
         } catch (e) {
@@ -147,7 +147,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
             if (userLeft === true) {
                 numberOfBroadcastViewers--;
             }
-            console.log('ESB - notifyBroadcasterAboutNumberOfViewers ', numberOfBroadcastViewers);
+            // console.log('ESB - notifyBroadcasterAboutNumberOfViewers ', numberOfBroadcastViewers);
 
             users[broadcastId].socket.emit('number-of-broadcast-viewers-updated', {
                 numberOfBroadcastViewers: numberOfBroadcastViewers,
