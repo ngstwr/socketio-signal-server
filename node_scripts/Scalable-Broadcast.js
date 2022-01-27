@@ -43,6 +43,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
             var relayUser = getFirstAvailableBroadcaster(user.broadcastId, maxRelayLimitPerUser);
 
             if (relayUser === 'ask-him-rejoin') {
+                console.log('ESB - join-broadcast ask-him-rejoin ');
                 socket.emit('rejoin-broadcast', user.broadcastId);
                 return;
             }
@@ -82,17 +83,19 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
     });
 
     socket.on('scalable-broadcast-message', function(message) {
-            console.log('ESB - scalable-broadcast-message ', message);
+        console.log('ESB - scalable-broadcast-message ', message);
         socket.broadcast.emit('scalable-broadcast-message', message);
     });
 
     socket.on('can-relay-broadcast', function() {
+        console.log('ESB - can-relay-broadcast')
         if (users[socket.userid]) {
             users[socket.userid].canRelay = true;
         }
     });
 
     socket.on('can-not-relay-broadcast', function() {
+        console.log('ESB - can-not-relay-broadcast')
         if (users[socket.userid]) {
             users[socket.userid].canRelay = false;
         }
@@ -100,7 +103,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
 
     socket.on('check-broadcast-presence', function(userid, callback) {
         // we can pass number of viewers as well
-            console.log('ESB - check-broadcast-presence ', userid);
+        console.log('ESB - check-broadcast-presence ', userid);
         try {
             callback(!!users[userid] && users[userid].isBroadcastInitiator === true);
         } catch (e) {
@@ -144,6 +147,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
             if (userLeft === true) {
                 numberOfBroadcastViewers--;
             }
+            console.log('ESB - notifyBroadcasterAboutNumberOfViewers ', numberOfBroadcastViewers);
 
             users[broadcastId].socket.emit('number-of-broadcast-viewers-updated', {
                 numberOfBroadcastViewers: numberOfBroadcastViewers,
