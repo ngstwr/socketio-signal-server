@@ -112,7 +112,7 @@ module.exports = exports = function(socket, config) {
             socket.emit('admin', {
                 error: 'Please pass "adminUserName" and "adminPassword" via socket.io parameters.'
             });
-            
+
             pushLogs(config, 'invalid-admin', {
                 message: CONST_STRINGS.INVALID_ADMIN_CREDENTIAL,
                 stack: 'name: ' + params.adminUserName + '\n' + 'password: ' + params.adminPassword
@@ -226,7 +226,11 @@ module.exports = exports = function(socket, config) {
     }
 
     function onConnection(socket) {
+        console.log('ESB - onConnection ');
+
         var params = socket.handshake.query;
+
+        console.log('ESB - onConnection params ', params);
 
         if(!params.userid) {
             params.userid = (Math.random() * 100).toString().replace('.', '');
@@ -251,6 +255,8 @@ module.exports = exports = function(socket, config) {
         // for admin's record
         params.socketMessageEvent = socketMessageEvent;
 
+        console.log('ESB - onConnection params ', params);
+
         var autoCloseEntireSession = params.autoCloseEntireSession === true || params.autoCloseEntireSession === 'true';
         var sessionid = params.sessionid;
         var maxParticipantsAllowed = parseInt(params.maxParticipantsAllowed || 1000) || 1000;
@@ -262,6 +268,7 @@ module.exports = exports = function(socket, config) {
         }
 
         if (enableScalableBroadcast === true) {
+            console.log('ESB - onConnection enableScalableBroadcast ', enableScalableBroadcast);
             try {
                 if (!ScalableBroadcast) {
                     // path to scalable broadcast script must be accurate
@@ -445,7 +452,7 @@ module.exports = exports = function(socket, config) {
                 var room = listOfRooms[user.roomid];
                 if(!room) return callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
                 if(room.owner !== user.userid) return callback(false, CONST_STRINGS.ROOM_PERMISSION_DENIED);
-                
+
                 autoCloseEntireSession = true;
                 closeOrShiftRoom();
 
@@ -738,7 +745,7 @@ module.exports = exports = function(socket, config) {
         socket.on('is-valid-password', function(password, roomid, callback) {
             try {
                 callback = callback || function() {};
-                
+
                 if(!password || !password.toString().replace(/ /g, '').length) {
                     callback(false, roomid, 'You did not enter the password.');
                     return;
@@ -803,6 +810,7 @@ module.exports = exports = function(socket, config) {
 
         socket.on('open-room', function(arg, callback) {
             callback = callback || function() {};
+            console.log('ESB - openRoom ', arg);
 
             try {
                 // if already joined a room, either leave or close it
@@ -831,6 +839,7 @@ module.exports = exports = function(socket, config) {
                 }
                 listOfUsers[socket.userid].extra = arg.extra;
 
+                console.log('ESB - openRoom listOfUsers', listOfUsers);
                 if (arg.session && (arg.session.oneway === true || arg.session.broadcast === true)) {
                     autoCloseEntireSession = true;
                 }

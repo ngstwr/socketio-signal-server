@@ -120,6 +120,8 @@ ioServer(httpApp, {
     }
 
     socket.on(params.socketCustomEvent, function(message) {
+        console.log('ESB - socketCustomEvent ', socketCustomEvent);
+        console.log('ESB - socketCustomEvent message ', message);
         socket.broadcast.emit(params.socketCustomEvent, message);
     });
 });

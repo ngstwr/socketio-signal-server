@@ -15,8 +15,10 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
     }
 
     socket.on('join-broadcast', function(user) {
+        console.log('ESB - join-broadcast user ', user);
         try {
             if (!users[user.userid]) {
+                console.log('ESB - join-broadcast not a first user ', user);
                 socket.userid = user.userid;
                 socket.isScalableBroadcastSocket = true;
 
@@ -46,6 +48,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
             }
 
             if (relayUser && user.userid !== user.broadcastId) {
+                console.log('ESB - join-broadcast not a initiator user ', user);
                 var hintsToJoinBroadcast = {
                     typeOfStreams: relayUser.typeOfStreams,
                     userid: relayUser.userid,
@@ -66,6 +69,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
                 // logs for target relaying user
                 relayUser.socket.emit('logs', 'You <' + relayUser.userid + '>' + ' are now relaying/forwarding data/stream to <' + user.userid + '>');
             } else {
+                console.log('ESB - join-broadcast initiator user ', user);
                 users[user.userid].isBroadcastInitiator = true;
                 socket.emit('start-broadcasting', users[user.userid].typeOfStreams);
 
@@ -204,7 +208,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
                 Object.keys(users).forEach(function(uid) {
                     var user = users[uid];
                     if(!user) return;
-                    
+
                     try {
                         var relayReceivers = [];
                         user.relayReceivers.forEach(function(s) {
