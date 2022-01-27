@@ -292,6 +292,7 @@ module.exports = exports = function(socket, config) {
         appendUser(socket, params);
 
         socket.on('extra-data-updated', function(extra) {
+            console.log('ESB - extra-data-updated ', extra);
             try {
                 if (!listOfUsers[socket.userid]) return;
 
@@ -663,6 +664,7 @@ module.exports = exports = function(socket, config) {
         }
 
         socket.on(socketMessageEvent, function(message, callback) {
+            console.log('ESB - socketMessageEvent ', message);
             if (message.remoteUserId && message.remoteUserId === socket.userid) {
                 // remoteUserId MUST be unique
                 return;

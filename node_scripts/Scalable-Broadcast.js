@@ -82,6 +82,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
     });
 
     socket.on('scalable-broadcast-message', function(message) {
+            console.log('ESB - scalable-broadcast-message ', message);
         socket.broadcast.emit('scalable-broadcast-message', message);
     });
 
@@ -99,6 +100,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
 
     socket.on('check-broadcast-presence', function(userid, callback) {
         // we can pass number of viewers as well
+            console.log('ESB - check-broadcast-presence ', userid);
         try {
             callback(!!users[userid] && users[userid].isBroadcastInitiator === true);
         } catch (e) {
