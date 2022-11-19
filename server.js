@@ -42,7 +42,7 @@ function serverHandler(request, response) {
     response.writeHead(200, {
         'Content-Type': 'text/plain'
     });
-    response.write('RTCMultiConnection Socket.io Server.\n\n' + 'https://github.com/muaz-khan/RTCMultiConnection-Server\n\n' + 'npm install RTCMultiConnection-Server');
+    response.write('KodeMint Signal Server V2.\n\n' + 'Contact hi@kodemint.in for installation & additional services.\n\n' + 'https://kodemint.in');
     response.end();
 }
 
