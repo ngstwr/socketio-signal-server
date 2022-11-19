@@ -1,15 +1,15 @@
 {
-  "name": "socketio-signal-server",
+  "name": "kodemint-signal-server",
   "preferGlobal": false,
-  "version": "1.3.2",
-  "description": "Socket.io Signal Server",
+  "version": "2",
+  "description": "kodeMint SocketIO Signal V2 Server",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/ngstwr/socketio-signal-server.git"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node signalv2.js"
   },
   "main": "./node_scripts/index.js",
   "dependencies": {
