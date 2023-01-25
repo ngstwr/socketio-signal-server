@@ -9,7 +9,7 @@
     "url": "https://github.com/ngstwr/socketio-signal-server.git"
   },
   "scripts": {
-    "start": "node signalv2.js"
+    "start": "node server.js"
   },
   "main": "./node_scripts/index.js",
   "dependencies": {
